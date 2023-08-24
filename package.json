@@ -1,0 +1,36 @@
+{
+  "name": "the-box-server",
+  "version": "1.0.0",
+  "description": "my capstone project server side code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imanhedeshy/the-box-server.git"
+  },
+  "author": "Iman Hedeshy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imanhedeshy/the-box-server/issues"
+  },
+  "homepage": "https://github.com/imanhedeshy/the-box-server#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.1",
+    "knex": "^2.5.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.6.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.7.2",
+    "uuid": "^9.0.0"
+  }
+}
