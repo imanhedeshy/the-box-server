@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 require("dotenv").config();
 
+const bcrypt = require("bcrypt");
+
 const {
   hashPassword,
   createToken,
@@ -86,27 +88,32 @@ router.route("/register").post(async (req, res) => {
 // POST /users/login to sign in
 router.route("/login").post(async (req, res) => {
   const user = req.body;
+  console.log(req.body);
   try {
     const result = await findUser(user);
-    if (result.code === "NOT_FOUND")
-      res.status(409).json({ success: false, error: result.message });
-    else if (!passwordsMatch(user.password, result.password_hash))
+    if (result.code === "NOT_FOUND") {
+      console.log(result.code);
+      res.status(409).json({ success: false, error: "Incorrect username or password!" });
+    } else if (!(await passwordsMatch(user.password, result.password_hash))) {
       res.status(406).json({
         success: false,
         error: "Incorrect username or password!",
       });
-    else {
+    } else {
       try {
         if (result) {
           const token = createToken(result);
+          console.log(token);
+
           res.status(201).json({
             success: true,
             message: "Logged in successfully.",
             id: result.id,
-            token: token,
+            token: `Bearer ${token}`,
           });
         } else throw new Error();
       } catch (error) {
+        console.log("error 3");
         res
           .status(500)
           .json({ success: false, error: "Internal server error!" });
