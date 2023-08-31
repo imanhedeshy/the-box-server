@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const { getThreadsForId } = require("../controllers/threadController");
+const { verifyToken } = require("../middlewares/authenticate")
 
-router.route("/").get(async (req, res) => {
+router.route("/").get(verifyToken, async (req, res) => {
   try {
     const threads = await getThreadsForId();
     if (!threads)

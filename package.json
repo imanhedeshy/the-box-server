@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch index.js",
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "nodemon": "nodemon -e js,scss index.js",
     "prettify": "prettier --write .",
     "createtable": "knex migrate:make",
     "migrate": "knex migrate:latest",

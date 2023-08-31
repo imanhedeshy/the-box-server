@@ -131,6 +131,14 @@ router.route("/").get(verifyToken, (req, res) => {
   res.json({ message: "Here come the users!" });
 });
 
+// GET /users/validate validates the JWT: returns true/false
+router.route("/:username").get(verifyToken, async (req, res) => {
+  const paramsUsername = req.params.username;
+  const user = await getProfileById(req.user.id);
+  if (user.username === paramsUsername) res.json({ success: true, user: user });
+  else res.status(401).json({ success: false, error: "Unauthorized access!" });
+});
+
 router.route("/:username").get(verifyToken, async (req, res) => {
   const paramsUsername = req.params.username;
   const user = await getProfileById(req.user.id);
