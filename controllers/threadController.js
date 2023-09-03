@@ -1,5 +1,4 @@
 const knex = require("knex")(require("../knexfile").development);
-const { findUser } = require("./userController");
 
 const getThreadsForId = async (thread_id) => {
   try {
@@ -12,7 +11,7 @@ const getThreadsForId = async (thread_id) => {
         "users.name as user_name",
         knex.raw("COUNT(DISTINCT likes.id) as likes_count"),
         knex.raw(
-          "JSON_ARRAYAGG(JSON_OBJECT('content', comments.content, 'user_name', comment_users.name)) as comments"
+          "JSON_ARRAYAGG(JSON_OBJECT('content', comments.content, 'user_name', comment_users.name, 'created_at', comments.created_at)) as comments"
         )
       )
       .leftJoin("likes", "threads.id", "likes.thread_id")
@@ -26,6 +25,24 @@ const getThreadsForId = async (thread_id) => {
       .join("users", "threads.user_id", "users.id")
       .groupBy("threads.id")
       .orderBy("threads.created_at", "desc");
+
+    threadsWithComments.forEach((thread) => {
+      if (thread.comments) {
+        const uniqueComments = new Set();
+
+        thread.comments = thread.comments.filter((comment) => {
+          if (comment.created_at && !uniqueComments.has(comment.content)) {
+            uniqueComments.add(comment.content);
+            return true;
+          }
+          return false;
+        });
+
+        thread.comments.sort((b, a) =>
+          (a.created_at || "").localeCompare(b.created_at || "")
+        );
+      }
+    });
 
     return threadsWithComments;
   } catch (error) {
@@ -52,7 +69,6 @@ const createThread = async (content) => {
       .select(knex.raw("COUNT(DISTINCT likes.id) as likes_count"))
       .orderBy("threads.created_at", "desc")
       .first();
-
     return insertedThread;
   } catch (error) {
     console.error("Error inserting thread:", error);
@@ -68,11 +84,48 @@ const likeThreadById = async (like) => {
   }
 };
 
-const createCommentForId = async (thread_id, user_id, comment_content) => {};
+const createCommentForId = async (comment) => {
+  try {
+    const [comment_id] = await knex("comments").insert(comment);
+
+    const insertedComment = await knex("comments")
+      .select(
+        "comments.*",
+        "users.username as user_username",
+        "users.name as user_name"
+      )
+      .where("comments.id", comment_id)
+      .join("users", "users.id", "comments.user_id")
+      .first();
+
+    return insertedComment;
+  } catch (error) {
+    console.error("Error creating comment in db:", error);
+    throw error;
+  }
+};
+
+const deleteThreadById = async (thread_id) => {
+  try {
+    await knex("comments").where("thread_id", thread_id).delete();
+    await knex("likes").where("thread_id", thread_id).delete();
+
+    await knex("threads")
+      .where("threads.id", thread_id)
+      .delete()
+      .then(() => true);
+  } catch (error) {
+    console.error("Error deleting thread:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while deleting the thread." });
+  }
+};
 
 module.exports = {
   getThreadsForId,
   createThread,
   likeThreadById,
   createCommentForId,
+  deleteThreadById,
 };
