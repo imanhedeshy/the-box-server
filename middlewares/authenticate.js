@@ -8,7 +8,6 @@ JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const verifyToken = async (req, res, next) => {
   const reqAuth = await req.header("Authorization");
-  console.log(reqAuth);
   if (!reqAuth)
     return res
       .status(401)
@@ -22,7 +21,7 @@ const verifyToken = async (req, res, next) => {
         .status(401)
         .json({ success: false, error: "Unauthorized: Invalid token" });
     } else {
-      req.body = decodedToken;
+      req.body = { ...decodedToken, ...req.body };
       next();
     }
   } catch (error) {

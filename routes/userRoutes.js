@@ -45,7 +45,7 @@ router.route("/register").post(async (req, res) => {
   const password_hash = await hashPassword(password);
 
   const newUser = {
-    name: name,
+    name: name || username,
     username: username,
     email: email,
     password_hash: password_hash,
@@ -68,7 +68,7 @@ router.route("/register").post(async (req, res) => {
             success: true,
             message: "User registered successfully.",
             id: result[0],
-            token: token,
+            token: `Bearer ${token}`,
           });
           return;
         } else throw new Error();
