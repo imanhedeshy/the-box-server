@@ -34,4 +34,7 @@ router
     res.json({ success: true, like_id: result });
   });
 
+  router
+  .route("/:id").post()
+
 module.exports = router;
