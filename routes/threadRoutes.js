@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getThreadsForId,
   createThread,
+  likeThreadById,
 } = require("../controllers/threadController");
 const { verifyToken } = require("../middlewares/authenticate");
 
@@ -26,6 +27,11 @@ router
     const newThread = await createThread(thread);
     res.json(newThread);
     res.status(200);
+  })
+  .put(verifyToken, async (req, res) => {
+    const like = { user_id: req.body.id, thread_id: req.body.thread_id };
+    const result = await likeThreadById(like);
+    res.json({ success: true, like_id: result });
   });
 
 module.exports = router;
