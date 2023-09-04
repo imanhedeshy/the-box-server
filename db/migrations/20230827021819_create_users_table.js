@@ -5,6 +5,11 @@ exports.up = function (knex) {
     table.string("username").notNullable().unique();
     table.string("email").notNullable().unique();
     table.string("password_hash").notNullable();
+    table.string("background_image");
+    table.string("profile_pic");
+    table.string("headline");
+    table.string("location");
+    table.string("industry");
     table.enum("user_type", [
       "Odin",
       "student",
@@ -14,6 +19,16 @@ exports.up = function (knex) {
       "developer",
     ]);
     table.text("bio");
+    table.string("phone");
+    table.string("slack");
+    table.string("website");
+    table.string("linkedin");
+    table.string("github");
+    table.string("twitter");
+    table.string("facebook");
+    table.string("instagram");
+    table.string("video_source_1");
+    table.string("video_source_2");
   });
 };
 
