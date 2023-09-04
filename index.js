@@ -36,19 +36,19 @@ app
     res.json({ message: "You posted on The BOX!" });
   });
 
-// io.on("connection", (socket) => {
-//   socket.on("chat message", (msg) => {
-//     console.log("message: " + msg);
-//     io.emit("chat message", msg);
-//   });
-// });
-
 io.on("connection", (socket) => {
   socket.on("chat message", (msg) => {
     console.log("message: " + msg);
-    socket.broadcast.emit("chat message", msg);
+    io.emit("chat message", msg);
   });
 });
+
+// io.on("connection", (socket) => {
+//   socket.on("chat message", (msg) => {
+//     console.log("message: " + msg);
+//     socket.broadcast.emit("chat message", msg);
+//   });
+// });
 
 app.use("/users", userRoutes);
 app.use("/threads", threadRoutes);
