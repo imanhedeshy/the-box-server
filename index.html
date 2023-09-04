@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.5" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body {
         margin: 0;
@@ -10,6 +10,7 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif;
         width: 100%;
+        font-size: 1.3em;
       }
 
       #form {
@@ -69,6 +70,10 @@
       var messages = document.getElementById("messages");
       var form = document.getElementById("form");
       var input = document.getElementById("input");
+
+      input.addEventListener("focus", function () {
+        window.scrollTo(0, document.body.scrollHeight);
+      });
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
