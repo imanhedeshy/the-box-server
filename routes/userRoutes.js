@@ -21,8 +21,8 @@ const { verifyToken } = require("../middlewares/authenticate");
 
 // POST /users/register to sign up for a new account
 router.route("/register").post(async (req, res) => {
-  const { name, username, email, password, user_type, bio } = req.body;
-
+  const { name, username, email, password, userType, bio } = req.body;
+  console.log(username, email, password, userType);
   if (
     !username ||
     !username.trim("") ||
@@ -50,10 +50,9 @@ router.route("/register").post(async (req, res) => {
     username: username,
     email: email,
     password_hash: password_hash,
-    user_type: user_type,
+    user_type: userType,
     bio: bio,
   };
-
   try {
     const result = await createUser(newUser);
     if (result.code === "ER_DUP_ENTRY") {
@@ -65,12 +64,12 @@ router.route("/register").post(async (req, res) => {
       try {
         if (result[0]) {
           const token = await createToken({ id: result[0], ...newUser });
-          console.log(username);
-          const foundUser = await findUser({ username });
+          const foundUser = await findUser({ username });  
           console.log({
+            success: true,
             ...foundUser,
-            token,
-          });
+            token: `Bearer ${token}`,
+          });       
           res.json({
             success: true,
             ...foundUser,
@@ -142,6 +141,8 @@ router.route("/").get(verifyToken, (req, res) => {
 // GET /users/validate validates the JWT: returns true/false
 router.route("/:username").get(verifyToken, async (req, res) => {
   const paramsUsername = req.params.username;
+  const result = await findUser(req.params);
+  console.log(result);
   const user = await getStudentByUsername(paramsUsername);
   res.json(user);
 });
