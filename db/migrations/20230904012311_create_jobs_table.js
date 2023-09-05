@@ -6,7 +6,7 @@ exports.up = function (knex) {
     table.string("description");
     table.string("image_source").notNullable();
     table.string("link").notNullable();
-    table.string("user_id").references("users.user_id");
+    table.integer("user_id").unsigned().references("users.id");
     table.timestamps(true, true);
   });
 };

@@ -4,6 +4,8 @@ const http = require("http");
 const server = http.createServer(app);
 const path = require("path");
 
+const knex = require("knex")(require("./knexfile").development);
+
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
@@ -36,10 +38,34 @@ app
     res.json({ message: "You posted on The BOX!" });
   });
 
-io.on("connection", (socket) => {
-  socket.on("chat message", (msg) => {
-    console.log("message: " + msg);
-    io.emit("chat message", msg);
+io.on("connection", async (socket) => {
+  // Broadcast chat history on connection
+  await knex("messages")
+    .then((data) => {
+      console.log(data);
+      socket.emit("chat history", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  socket.on("chat message", async (data) => {
+    console.log("message: " + data.message);
+    io.emit("chat message", data);
+
+    // Save message to database
+    await knex("messages")
+      .insert({
+        name: data.username,
+        message: data.message,
+        timestamp: new Date(),
+      })
+      .then(() => {
+        console.log("Message saved to database");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 });
 

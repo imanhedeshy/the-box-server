@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable("tech_stack", (table) => {
     table.increments("id").primary();
-    table.integer("user_id").references("users.id");
+    table.integer("user_id").unsigned().references("users.id");
     table.enum("tech_stack", [
       "javascript",
       "typescript",
