@@ -14,6 +14,7 @@ const {
   createUser,
   findUser,
   getProfileById,
+  getStudentByUsername,
 } = require("../controllers/userController");
 const { isValidEmail } = require("../utils/validators");
 const { verifyToken } = require("../middlewares/authenticate");
@@ -63,11 +64,16 @@ router.route("/register").post(async (req, res) => {
     } else {
       try {
         if (result[0]) {
-          const token = createToken({ id: result[0], ...newUser });
+          const token = await createToken({ id: result[0], ...newUser });
+          console.log(username);
+          const foundUser = await findUser({ username });
+          console.log({
+            ...foundUser,
+            token,
+          });
           res.json({
             success: true,
-            message: "User registered successfully.",
-            id: result[0],
+            ...foundUser,
             token: `Bearer ${token}`,
           });
           return;
@@ -88,12 +94,13 @@ router.route("/register").post(async (req, res) => {
 // POST /users/login to sign in
 router.route("/login").post(async (req, res) => {
   const user = req.body;
-  console.log(req.body);
   try {
     const result = await findUser(user);
     if (result.code === "NOT_FOUND") {
       console.log(result.code);
-      res.status(409).json({ success: false, error: "Incorrect username or password!" });
+      res
+        .status(409)
+        .json({ success: false, error: "Incorrect username or password!" });
     } else if (!(await passwordsMatch(user.password, result.password_hash))) {
       res.status(406).json({
         success: false,
@@ -103,12 +110,13 @@ router.route("/login").post(async (req, res) => {
       try {
         if (result) {
           const token = createToken(result);
-          console.log(token);
-
           res.status(201).json({
             success: true,
             message: "Logged in successfully.",
             id: result.id,
+            username: result.username,
+            userType: result.user_type,
+            name: result.name,
             token: `Bearer ${token}`,
           });
         } else throw new Error();
@@ -134,16 +142,8 @@ router.route("/").get(verifyToken, (req, res) => {
 // GET /users/validate validates the JWT: returns true/false
 router.route("/:username").get(verifyToken, async (req, res) => {
   const paramsUsername = req.params.username;
-  const user = await getProfileById(req.user.id);
-  if (user.username === paramsUsername) res.json({ success: true, user: user });
-  else res.status(401).json({ success: false, error: "Unauthorized access!" });
-});
-
-router.route("/:username").get(verifyToken, async (req, res) => {
-  const paramsUsername = req.params.username;
-  const user = await getProfileById(req.user.id);
-  if (user.username === paramsUsername) res.json({ success: true, user: user });
-  else res.status(401).json({ success: false, error: "Unauthorized access!" });
+  const user = await getStudentByUsername(paramsUsername);
+  res.json(user);
 });
 
 module.exports = router;

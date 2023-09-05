@@ -7,14 +7,16 @@ exports.seed = function (knex) {
       return knex("cohorts").insert([
         {
           id: 1,
-          name: "Cohort 1",
-          campus: "Toronto",
+          user_id: 1,
+          name: "The Nameless '23",
+          campus: "Online",
           discipline: "Software Engineering",
           type: "full-time",
-          start_date: "2023-01-01",
+          start_date: "2023-06-21",
         },
         {
           id: 2,
+          user_id: 2,
           name: "Cohort 2",
           campus: "Vancouver",
           discipline: "Data Science",
@@ -23,6 +25,7 @@ exports.seed = function (knex) {
         },
         {
           id: 3,
+          user_id: 3,
           name: "Cohort 3",
           campus: "New York",
           discipline: "UX Design",

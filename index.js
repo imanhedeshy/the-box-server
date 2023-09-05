@@ -42,7 +42,6 @@ io.on("connection", async (socket) => {
   // Broadcast chat history on connection
   await knex("messages")
     .then((data) => {
-      console.log(data);
       socket.emit("chat history", data);
     })
     .catch((err) => {
@@ -52,7 +51,6 @@ io.on("connection", async (socket) => {
   socket.on("chat message", async (data) => {
     console.log("message: " + data.message);
     io.emit("chat message", data);
-
     // Save message to database
     await knex("messages")
       .insert({
@@ -63,18 +61,11 @@ io.on("connection", async (socket) => {
       .then(() => {
         console.log("Message saved to database");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log(error);
       });
   });
 });
-
-// io.on("connection", (socket) => {
-//   socket.on("chat message", (msg) => {
-//     console.log("message: " + msg);
-//     socket.broadcast.emit("chat message", msg);
-//   });
-// });
 
 app.use("/users", userRoutes);
 app.use("/threads", threadRoutes);
