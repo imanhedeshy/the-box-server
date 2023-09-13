@@ -10,11 +10,13 @@ const {
   createToken,
   passwordsMatch,
 } = require("../utils/authentications");
+
 const {
   createUser,
   findUser,
   getProfileById,
   getStudentByUsername,
+  getUsersForExpo,
 } = require("../controllers/userController");
 const { isValidEmail } = require("../utils/validators");
 const { verifyToken } = require("../middlewares/authenticate");
@@ -64,12 +66,12 @@ router.route("/register").post(async (req, res) => {
       try {
         if (result[0]) {
           const token = await createToken({ id: result[0], ...newUser });
-          const foundUser = await findUser({ username });  
+          const foundUser = await findUser({ username });
           console.log({
             success: true,
             ...foundUser,
             token: `Bearer ${token}`,
-          });       
+          });
           res.json({
             success: true,
             ...foundUser,
@@ -131,11 +133,15 @@ router.route("/login").post(async (req, res) => {
   }
 });
 
-// GET /users get all users; only for Odin
-router.route("/").get(verifyToken, (req, res) => {
-  console.log(req.body);
-  console.log(req.user);
-  res.json({ message: "Here come the users!" });
+// GET /users get all users for Expo cards
+router.route("/").get(verifyToken, async (req, res) => {
+  try {
+    const users = await getUsersForExpo();
+    res.json({ success: true, users: users, message: "Here come the users!" });
+  } catch (error) {
+    console.error("Error getting users for Expo", error);
+    res.status(500).json({ success: false, error: "Internal server error!" });
+  }
 });
 
 // GET /users/validate validates the JWT: returns true/false

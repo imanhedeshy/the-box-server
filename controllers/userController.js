@@ -201,10 +201,55 @@ const getPartnerByUsername = async (username) => {
   return student;
 };
 
+const getUsersForExpo = async () => {
+  try {
+    const users = await knex("users")
+      .leftJoin("cohorts", "users.id", "=", "cohorts.user_id")
+      .select(
+        "users.id as user_id",
+        "users.name",
+        "users.username",
+        "users.user_type",
+        "users.email",
+        "cohorts.name as cohortName",
+        "cohorts.campus as cohort",
+        "cohorts.discipline",
+        "cohorts.start_date as startDate",
+        "users.headline",
+        "users.bio",
+        "users.resume_link"
+      );
+
+    const projects = await knex("projects").select(
+      "id as project_id",
+      "user_id",
+      "type as project_type",
+      "title as project_title",
+      "link as project_link",
+      "description as project_description",
+      "image_source as project_image"
+    );
+
+    for (let user of users) {
+      user.projects = projects.filter(
+        (project) => project.user_id === user.user_id
+      );
+    }
+
+    return users;
+  } catch (error) {
+    console.error({
+      Erorr: "Error getting users for expo from database",
+      error,
+    });
+  }
+};
+
 module.exports = {
   createUser,
   findUser,
   getProfileById,
   getStudentByUsername,
   getPartnerByUsername,
+  getUsersForExpo,
 };
