@@ -46,3 +46,52 @@ The API endpoints are detailed in [API_DOCS.md](API_DOCS.md). Here's a sample of
 ## Database Schema
 
 The MySQL database schema includes tables for users, posts, comments, and more. Details can be found in [DATABASE.md](DATABASE.md).
+
+
+```
+project-root/
+│
+├── src/ 
+│   ├── config/          # Configuration files
+│   │   ├── aws.js       # AWS SDK and S3 configuration
+│   │   ├── db.js        # Knex and database configuration
+│   │   └── knexfile.js  # Knex configuration file
+│   │
+│   ├── controllers/     # Controller logic
+│   │   ├── s3Controller.js
+│   │   ├── userController.js
+│   │   └── ...
+│   │
+│   ├── models/          # Database models
+│   │   ├── userModel.js
+│   │   └── ...
+│   │
+│   ├── routes/          # Routes
+│   │   ├── s3Routes.js
+│   │   ├── userRoutes.js
+│   │   └── ...
+│   │
+│   ├── middleware/      # Middleware functions
+│   │   └── ...
+│   │
+│   ├── public/          # Static files
+│   │   └── index.html   # Static public page
+│   │
+│   ├── app.js           # Main server file
+│   │
+│   └── ...
+│
+├── test/                # Test files
+│   └── ...
+│
+├── node_modules/        # Node modules
+│
+├── package.json         # Package configuration
+│
+├── .env                 # Environment variables (ensure this is gitignored)
+│
+├── .gitignore           # Ignored files and directories
+│
+└── README.md            # Project documentation
+
+```
