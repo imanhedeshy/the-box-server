@@ -8,6 +8,7 @@ const {
   createCommentForId,
   deleteThreadById,
 } = require("../controllers/threadController");
+
 const { verifyToken } = require("../middlewares/authenticate");
 
 router

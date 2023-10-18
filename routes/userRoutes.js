@@ -3,8 +3,6 @@ const express = require("express");
 const router = express.Router();
 require("dotenv").config();
 
-const bcrypt = require("bcrypt");
-
 const {
   hashPassword,
   createToken,
@@ -14,10 +12,10 @@ const {
 const {
   createUser,
   findUser,
-  getProfileById,
   getStudentByUsername,
   getUsersForExpo,
 } = require("../controllers/userController");
+
 const { isValidEmail } = require("../utils/validators");
 const { verifyToken } = require("../middlewares/authenticate");
 
