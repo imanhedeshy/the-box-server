@@ -1,10 +1,14 @@
-# Contributing to BrainStation BOX Server
+# Contributing to TheBOX!
 
-First off, thank you for considering contributing to the BrainStation BOX server. It's people like you that make the open-source community such a great place to learn, inspire, and create. Below is a set of guidelines for contributing to this project.
+First off, thank you for considering contributing to TheBOX!. It's people like you that make the open-source community such a great place to learn, inspire, and create. Below is a set of guidelines for contributing to this project.
 
 ## Code of Conduct
 
 By participating, you are expected to uphold this code. Please report unacceptable behavior to [iman.hedeshy@gmail.com](mailto:iman.hedeshy@gmail.com).
+
+## Adherence to License
+
+Before contributing, please review the [LICENSE.md](./LICENSE.md) file. TheBOX! is subject to strict copyright and licensing terms, and your contributions must adhere to these terms. Contributions are welcome under the condition that they respect the original work's proprietary nature and include proper credit to the author, Iman Hedeshy.
 
 ## Getting Started
 
@@ -59,6 +63,6 @@ Before you begin:
 
 - For any questions or discussions, feel free to open an issue or contact [Iman Hedeshy](https://github.com/imanhedeshy).
 
-Thank you for your interest in contributing to the BrainStation BOX server!
+Thank you for your interest in contributing to TheBOX!!
 
 - [Iman Hedeshy](https://github.com/imanhedeshy)

@@ -51,7 +51,7 @@ Explore our API endpoints in [API_DOCS.md](./docs/API_DOCS.md). Key endpoints in
 
 ## Database Schema
 
-Our MySQL schema comprises tables for users, posts, comments, etc. Detailed schema information is available in [DATABASE.md](DATABASE.md).
+Our MySQL schema comprises tables for users, posts, comments, etc. Detailed schema information is available in [DATABASE.md](./docs/DATABASE.md).
 
 ## Project Structure
 
