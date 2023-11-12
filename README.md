@@ -1,7 +1,7 @@
 # TheBOX! Server
 
-<div align="center" style="width: 30%;">
-  <img src="./assets/images/logos/the-box-logo.jpg" alt="TheBOX! Logo">
+<div align="center">
+  <img src="./assets/images/logos/the-box-logo.jpg" alt="TheBOX! Logo" width="30%">
 </div>
 
 ## Overview
