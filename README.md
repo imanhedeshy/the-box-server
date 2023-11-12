@@ -1,7 +1,7 @@
 # BrainStation BOX Server
 
 <div align="center">
-  <img src="your-logo.png" alt="BrainStation BOX Logo">
+  <img src="./assets/images/logos/the-box-logo (2).jpg" alt="BrainStation BOX Logo">
 </div>
 
 ## Overview
@@ -40,7 +40,7 @@ This application is ready for deployment to Heroku, with necessary scripts and c
 
 ## API Documentation
 
-Explore our API endpoints in [API_DOCS.md](API_DOCS.md). Key endpoints include:
+Explore our API endpoints in [API_DOCS.md](./docs/API_DOCS.md). Key endpoints include:
 
 - POST /auth/register: Register a new user.
 - POST /auth/login: Authenticate a user.
@@ -169,8 +169,8 @@ project-root/
 
 ## Contribution
 
-Contributions to theBOX! server are welcomed. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Contributions to theBOX! server are welcomed. Please read [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## License
 
-This project is licensed under the [UNLICENSED] - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the [UNLICENSED] - see the [LICENSE.md](./docs/LICENSE.md) file for details.

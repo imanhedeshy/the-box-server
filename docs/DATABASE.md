@@ -125,4 +125,4 @@ This document provides detailed information about the database schema used in th
 
 ---
 
-This schema is designed to support the various functionalities of the BrainStation BOX server, ensuring robust and efficient data management and retrieval.
+This schema is designed to support the various functionalities of TheBOX! server, ensuring robust and efficient data management and retrieval.
