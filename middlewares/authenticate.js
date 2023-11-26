@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const { isValidJwt } = require("../utils/validators");
 
-JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const verifyToken = async (req, res, next) => {
   const reqAuth = await req.header("Authorization");
