@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon --exec ts-node index.ts -e ts,scss,html",
+    "dev": "nodemon --exec ts-node index.js -e js,scss,html",
     "build": "tsc",
     "heroku-postbuild": "npm run build",
     "prettify": "prettier --write .",
