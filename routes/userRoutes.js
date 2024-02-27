@@ -108,7 +108,9 @@ router.route("/login").post(async (req, res) => {
     } else {
       try {
         if (result) {
+          console.log("result", result);
           const token = createToken(result);
+          console.log("TOKEN!!!!!", token);
           res.status(201).json({
             success: true,
             message: "Logged in successfully.",
@@ -120,7 +122,7 @@ router.route("/login").post(async (req, res) => {
           });
         } else throw new Error();
       } catch (error) {
-        console.log("error 3");
+        console.log("error 3", error);
         res
           .status(500)
           .json({ success: false, error: "Internal server error!" });
